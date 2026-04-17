@@ -1,37 +1,38 @@
 class OcGoCc < Formula
   desc "Proxy Claude Code requests to OpenCode Go API"
   homepage "https://github.com/samueltuyizere/oc-go-cc"
-  url "https://github.com/samueltuyizere/oc-go-cc/releases/download/v0.0.2/oc-go-cc_darwin-arm64"
-  version "0.0.2"
-  sha256 "af3732f0aa48f00ef2d11b27bc7fec2594c761dafec2c0415c2c227f5f9a8b2d"
-
-  depends_on :macos => :arm64_if_intel
+  version "0.0.3"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/samueltuyizere/oc-go-cc/releases/download/v0.0.2/oc-go-cc_darwin-arm64"
-      sha256 "af3732f0aa48f00ef2d11b27bc7fec2594c761dafec2c0415c2c227f5f9a8b2d"
+      url "https://github.com/samueltuyizere/oc-go-cc/releases/download/v0.0.3/oc-go-cc_darwin-arm64"
+      sha256 "8ac52ac2c0ff59298263adec7380c533dcfa7d5db942b7f764b12420edb1fc51"
     else
-      url "https://github.com/samueltuyizere/oc-go-cc/releases/download/v0.0.2/oc-go-cc_darwin-amd64"
-      sha256 "d02e57bfe9f7a3b9727472c408b9568416b86f144aaefe323bcabc69b216dcc9"
+      url "https://github.com/samueltuyizere/oc-go-cc/releases/download/v0.0.3/oc-go-cc_darwin-amd64"
+      sha256 "9b2d2703083f9c6ca65543ac3ef73528b642515620487e80dd0d914810c2912c"
     end
   end
 
   on_linux do
     if Hardware::CPU.intel?
-      url "https://github.com/samueltuyizere/oc-go-cc/releases/download/v0.0.2/oc-go-cc_linux-amd64"
-      sha256 "328ec2c1fd97a3d4b1051adfcb00de2c48a495809ac0986002b1fc8440c0b15f"
+      url "https://github.com/samueltuyizere/oc-go-cc/releases/download/v0.0.3/oc-go-cc_linux-amd64"
+      sha256 "efdc1b72be6ffa1309d65829bc065c1cd5aea59a22e5f0e6026b11c0f016d371"
     else
-      url "https://github.com/samueltuyizere/oc-go-cc/releases/download/v0.0.2/oc-go-cc_linux-arm64"
-      sha256 "e060eb33e0b933c3f4fbbf8a9d4f4a589dfe46f1277861a75f5e51fb34b64aa8"
+      url "https://github.com/samueltuyizere/oc-go-cc/releases/download/v0.0.3/oc-go-cc_linux-arm64"
+      sha256 "3a359a56ea151b240e724f1e1511fc6791f7ea6b5026fbd826113d3f05763a05"
     end
   end
 
   def install
-    bin.install "oc-go-cc_darwin-arm64" => "oc-go-cc" if OS.mac? && Hardware::CPU.arm?
-    bin.install "oc-go-cc_darwin-amd64" => "oc-go-cc" if OS.mac? && !Hardware::CPU.arm?
-    bin.install "oc-go-cc_linux-amd64" => "oc-go-cc" if OS.linux? && Hardware::CPU.intel?
-    bin.install "oc-go-cc_linux-arm64" => "oc-go-cc" if OS.linux? && !Hardware::CPU.intel?
+    if OS.mac? && Hardware::CPU.arm?
+      bin.install "oc-go-cc_darwin-arm64" => "oc-go-cc"
+    elsif OS.mac?
+      bin.install "oc-go-cc_darwin-amd64" => "oc-go-cc"
+    elsif OS.linux? && Hardware::CPU.intel?
+      bin.install "oc-go-cc_linux-amd64" => "oc-go-cc"
+    else
+      bin.install "oc-go-cc_linux-arm64" => "oc-go-cc"
+    end
   end
 
   def caveats
